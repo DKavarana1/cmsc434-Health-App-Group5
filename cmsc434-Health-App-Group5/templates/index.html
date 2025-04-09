@@ -1,25 +1,316 @@
-<!-- Author: Darius  -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Health App Group 5</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Health App Prototype</title>
+  <style>
+    /********************************************************
+     * Phone Container
+     ********************************************************/
+    body {
+      background-color: #ddd; /* Slightly gray background behind phone */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Outer phone shape */
+    #phone {
+      width: 375px;    /* Typical mobile width */
+      height: 812px;   /* Typical mobile height */
+      background-color: #fff;
+      border: 2px solid #000;
+      border-radius: 40px; /* Rounded corners for phone shape */
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    /********************************************************
+     * Status Bar
+     ********************************************************/
+    .status-bar {
+      height: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      background-color: #eee;
+      font-size: 12px;
+    }
+    .status-bar-left {
+      color: #555;
+    }
+    .status-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-bar-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    /********************************************************
+     * Header (with left & right icons)
+     ********************************************************/
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #ffffff;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    /********************************************************
+     * Main Content Area
+     ********************************************************/
+    #app-content {
+      width: 100%;
+      height: calc(100% - 24px - 60px - 56px);
+      /* Subtract status-bar (24px), nav height (60px), header (56px) */
+      overflow-y: auto;
+      background-color: #f4f4f4;
+      padding: 0.5rem;
+    }
+
+    .section {
+      display: none; /* Hide all sections by default; show via JS */
+      padding: 0.5rem;
+    }
+    .section.active {
+      display: block;
+    }
+
+    .card {
+      background-color: #fff;
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .chart-placeholder {
+      background-color: #e3e3e3;
+      height: 120px;
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #777;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .form-group {
+      margin: 0.75rem 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group label {
+      margin-bottom: 0.25rem;
+    }
+    .form-group input {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #00796b;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005a4f;
+    }
+
+    /********************************************************
+     * Bottom Navigation
+     ********************************************************/
+    nav {
+      height: 60px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #ffffff;
+      box-shadow: 0 -2px 2px rgba(0,0,0,0.1);
+    }
+
+    .nav-item {
+      flex: 1;
+      text-align: center;
+      color: #555;
+      font-size: 0.8rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      user-select: none; /* Prevent text selection during drag */
+    }
+    .nav-item.active {
+      background-color: #e0f7fa;
+      font-weight: bold;
+      color: #00796b;
+    }
+
+    /* Drag classes */
+    .nav-item.dragging {
+      opacity: 0.5;
+    }
+    .nav-item.over {
+      border: 2px dashed #00796b;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1 class="title">Terps Health Tracking</h1>
-    <div class="buttons">
-      <div id = "signUp">
-        <p>Don't have an Account?</p>
-        <a href="/templates/signUp.html"><button>Sign Up!</button></a>
+  <div id="phone">
+    <!-- Minimalist Status Bar -->
+    <div class="status-bar">
+        <!-- README: maybe make it actual time -->
+      <div class="status-bar-left">11:53 AM</div> 
+      <div class="status-bar-right">
+        <!-- battery icon -->
+        <img 
+          class="status-bar-icon" 
+          src="https://cdn-icons-png.flaticon.com/512/3103/3103446.png" 
+          alt="Battery"
+        />
       </div>
-      <div id = "logIn">
-        <p>Keep Tracking Your Progress Terps</p>
-        <a href="/templates/loginPg.html"><button>Log In!</button></a>
     </div>
-  </div>
+
+    <!-- Header with left & right icons -->
+    <header>
+      <img 
+        src="https://cdn-icons-png.flaticon.com/512/54/54504.png" 
+        alt="Dashboard Icon" 
+        class="icon"
+      />
+      <h1 id="headerTitle">Health App</h1>
+      <img 
+        src="https://cdn-icons-png.flaticon.com/512/3524/3524631.png" 
+        alt="User Icon" 
+        class="icon"
+      />
+    </header>
+
+    <!-- Main Content -->
+    <div id="app-content">
+      <!-- Learn/Articles Section -->
+      <section id="section-learn" class="section active">
+        <div class="card">
+          <h2>Health Articles</h2>
+          <p>Stay informed! Check out these articles:</p>
+          <ul>
+            <li><strong>Boost Your Immune System</strong> - tips & best practices</li>
+            <li><strong>Healthy Meal Plans</strong> - cost-effective recipes</li>
+            <li><strong>Mindfulness Techniques</strong> - reduce stress in daily life</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Health Section -->
+      <section id="section-health" class="section">
+        <div class="card">
+          <h2>Sleep Tracking</h2>
+          <div class="chart-placeholder">Sleep: 4/8 Hours Logged (50%)</div>
+        </div>
+        <div class="card">
+          <h2>Water Intake</h2>
+          <div class="chart-placeholder">Water Intake: 3/8 Cups (38%)</div>
+        </div>
+      </section>
+
+      <!-- Dashboard Section -->
+      <section id="section-dashboard" class="section">
+        <div class="card">
+          <h2>Step Count</h2>
+          <div class="chart-placeholder">Bar Chart Placeholder</div>
+        </div>
+        <div class="card">
+          <h2>Quick Actions</h2>
+          <ul>
+            <li>Log Food Intake</li>
+            <li>Update Weight</li>
+            <li>Check Daily Goals</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Life Score</h2>
+          <p>Current Score: <span id="lifeScore">75</span>/100</p>
+          <button onclick="incrementLifeScore()">Improve Score</button>
+        </div>
+        <div class="card">
+          <h2>Recent Activities</h2>
+          <p>1. Morning Run - 2.5 miles</p>
+          <p>2. Yoga Session - 30 mins</p>
+        </div>
+      </section>
+
+      <!-- Activity Section -->
+      <section id="section-activity" class="section">
+        <div class="card">
+          <h2>Log Exercise</h2>
+          <p>Select a workout type and duration, then add it to your schedule.</p>
+          <div class="form-group">
+            <label for="exerciseType">Exercise Type</label>
+            <input id="exerciseType" type="text" placeholder="e.g., Running, Yoga, HIIT" />
+          </div>
+          <div class="form-group">
+            <label for="duration">Duration (minutes)</label>
+            <input id="duration" type="number" placeholder="e.g., 30" />
+          </div>
+          <button onclick="logExercise()">Add Activity</button>
+          <p id="activityMessage" style="margin-top: 0.5rem; color: green;"></p>
+        </div>
+      </section>
+
+      <!-- Body Section -->
+      <section id="section-body" class="section">
+        <div class="card">
+          <h2>Weight Tracking</h2>
+          <p>Track and update your weight regularly.</p>
+          <div class="form-group">
+            <label for="currentWeight">Current Weight (lbs)</label>
+            <input id="currentWeight" type="number" placeholder="e.g., 150" />
+          </div>
+          <button onclick="submitWeight()">Update</button>
+          <p id="weightMessage" style="margin-top: 0.5rem; color: green;"></p>
+        </div>
+      </section>
+    </div> <!-- end #app-content -->
+
+    <!-- Bottom Navigation -->
+    <nav>
+      <div class="nav-item active" data-section="learn">Learn</div>
+      <div class="nav-item" data-section="health">Health</div>
+      <div class="nav-item" data-section="dashboard">Dashboard</div>
+      <div class="nav-item" data-section="activity">Activity</div>
+      <div class="nav-item" data-section="body">Nutrition</div>
+    </nav>
+  </div> <!-- End #phone -->
+
+  <!-- Reference to external JS file -->
   <script src="server.js"></script>
 </body>
 </html>
