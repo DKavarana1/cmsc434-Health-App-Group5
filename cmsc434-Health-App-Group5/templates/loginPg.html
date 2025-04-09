@@ -1,0 +1,49 @@
+<!-- Author: Darius  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log Into Terps Health Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Login</h1>
+    Please provide your username and password below. 
+    <br>
+    <br>
+    
+    <form id="login_form">
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <a href="/templates/dashboardPg.html"><button id="login_button">Login</button></a>
+      <br>
+    </form>
+    <br>
+    <a href="/templates/index.html"><button id="home_page">Back to Home Page</button></a>
+
+
+    <!-- README: below is extra from chat we can make it our own later or remove it depending how we move on -->
+    <!-- Dashboard: Hidden initially, appears after successful login. Contains 5 navigation tabs. -->
+    <!-- <div id="dashboard" style="display: none;">
+      <nav class="tabs">
+        <button class="tab-link" data-tab="tab1">Tab 1</button>
+        <button class="tab-link" data-tab="tab2">Tab 2</button>
+        <button class="tab-link" data-tab="tab3">Tab 3</button>
+        <button class="tab-link" data-tab="tab4">Tab 4</button>
+        <button class="tab-link" data-tab="tab5">Tab 5</button>
+      </nav> -->
+      
+      <!-- Each tab's content. Only one will be visible at a time. -->
+      <!-- <div class="tab-content" id="tab1">Content for Tab 1</div>
+      <div class="tab-content" id="tab2">Content for Tab 2</div>
+      <div class="tab-content" id="tab3">Content for Tab 3</div>
+      <div class="tab-content" id="tab4">Content for Tab 4</div>
+      <div class="tab-content" id="tab5">Content for Tab 5</div>
+    </div>
+  </div> -->
+  
+  <script src="script.js"></script>
+</body>
+</html>
